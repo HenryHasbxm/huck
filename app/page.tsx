@@ -1,16 +1,8 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import { HuckApp } from '@/components/huck-app'
 
-export default function Page() {
-  const [initialRoom, setInitialRoom] = useState<string | null>(null)
-
-  useEffect(() => {
-    const room = new URLSearchParams(window.location.search).get('room')
-    setInitialRoom(room?.trim() || null)
-  }, [])
-
+export default async function Page({ searchParams }: { searchParams: Promise<{ room?: string | string[] }> }) {
+  const { room } = await searchParams
+  const initialRoom = typeof room === 'string' && room.trim() ? room : null
   return (
     <main className="mx-auto flex min-h-svh w-full max-w-7xl flex-col gap-4 px-4 py-4 md:px-8 md:py-8">
       <header className="flex items-baseline justify-between gap-4">
